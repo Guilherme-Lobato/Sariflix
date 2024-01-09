@@ -1,4 +1,38 @@
 body{
-    height: 500px;
-    background-color: aqua;
+    height: 100%;
+    background-color: var(--cor-principal);
+}
+
+.container{
+    padding-top: 120px;
+}
+
+
+.quadrado-texto{
+    padding-left: 30px;
+}
+
+.caixa-texto{
+    width: 540px;
+}
+
+.quadrado-resumo{
+    padding-left: 20px;
+}
+
+.salvar{
+    height: 80px;
+    width: 200px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(104, 42, 114);
+    text-decoration: none;
+    border:none;
+    outline: none;
+    border-radius: 20px;
+    
+}
+
+.quadrado-botao{
+    text-align: center;
+    padding-top: 30px;
 }

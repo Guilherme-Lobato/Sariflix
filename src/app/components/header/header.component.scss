@@ -1,17 +1,19 @@
-body{
-    background-color: var(--cor-principal);
-    height:500px;
+.header-component {
+  background-color: var(--cor-principal);
+  min-height: var(--header-height, 500px); 
 }
 
-.menu{
-    padding-top: 80px;
-    display: flex;
-    justify-content: center;
+
+.menu {
+  padding-top: 80px;
+  display: flex;
+  justify-content: center;
 }
 
-.menu ul a{
-    text-decoration: none;
-    padding: 200px;
-    font-size: 50px;
-    color: white;
+.menu ul a {
+  font-family: sans-serif;
+  text-decoration: none;
+  padding: 100px;
+  font-size: 40px;
+  color: white;
 }
