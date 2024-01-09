@@ -1,0 +1,17 @@
+body{
+    background-color: var(--cor-principal);
+    height:500px;
+}
+
+.menu{
+    padding-top: 80px;
+    display: flex;
+    justify-content: center;
+}
+
+.menu ul a{
+    text-decoration: none;
+    padding: 200px;
+    font-size: 50px;
+    color: white;
+}
