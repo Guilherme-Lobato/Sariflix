@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ListaComponent } from './components/lista/lista.component';
+import { ListaPendenteComponent } from './components/lista-pendentes/lista-pendentes.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
+import { HeaderComponent } from './components/header/header.component';
 
 const routes: Routes = [
-  {path: 'Lista', component: ListaComponent},
+  {path: 'Lista', component: ListaPendenteComponent},
   {path: 'Cadastro-Filme', component: CadastroComponent},
+  {path: 'Inicio', component: HeaderComponent},
   { path: '', redirectTo: '', pathMatch: 'full' },
 ];
 

@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FilmesService } from '../../service/filme.service';
 
-
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
@@ -13,23 +12,14 @@ export class CadastroComponent {
   filmeForm: FormGroup; 
   formSubmitted: boolean = false;
 
-  nomeViewer!: string;
-  nomeFilme!: string;
-  anoLancamento!: string;
-  genero!: string;
-  tempoCenaExplicita!: string;
-  resumo!: string;
-  tempoDuracao!: string;
-  link!: string;
-  
   originalFormState: any;
 
-  constructor(private http: HttpClient, private fb: FormBuilder, private filmesService: FilmesService ) {
+  constructor(private http: HttpClient, private fb: FormBuilder, private filmesService: FilmesService) {
     this.filmeForm = this.fb.group({
       nomeViewer: ['', Validators.required],
       nomeFilme: ['', Validators.required],
       anoLancamento: ['', Validators.required],
-      genero: ['SELECIONE O GÊNERO', Validators.required],
+      genero: ['GÊNERO', Validators.required],
       tempoCenaExplicita: [''],
       resumo: [''],
       tempoDuracao: ['', Validators.required],
@@ -66,7 +56,7 @@ export class CadastroComponent {
   clearErrorMessages() {
     Object.keys(this.filmeForm.controls).forEach(key => {
       const control = this.filmeForm.get(key);
-      
+
       if (control && control.touched) {
         control.setErrors(null);
       }

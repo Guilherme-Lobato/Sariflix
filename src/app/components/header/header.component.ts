@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
     if (url.includes('/Lista') || url.includes('/Cadastro-Filme')) {
       headerHeight = '200px';
     } else {
-      headerHeight = '500px'; 
+      headerHeight = '100%'; 
     }
   
     document.documentElement.style.setProperty('--header-height', headerHeight);
