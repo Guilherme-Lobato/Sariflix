@@ -1,38 +1,42 @@
-body{
+
+  body {
     height: 100%;
     background-color: var(--cor-principal);
-}
+  }
 
-.container{
+  .container {
     padding-top: 120px;
-}
+  }
 
 
-.quadrado-texto{
-    padding-left: 30px;
-}
-
-.caixa-texto{
+  .caixa-texto {
     width: 540px;
-}
+  }
 
-.quadrado-resumo{
-    padding-left: 20px;
-}
 
-.salvar{
+  .salvar {
     height: 80px;
     width: 200px;
     color: rgb(255, 255, 255);
     background-color: rgb(104, 42, 114);
     text-decoration: none;
-    border:none;
+    border: none;
     outline: none;
     border-radius: 20px;
-    
+    transition: background-color 0.3s ease; 
 }
 
-.quadrado-botao{
+.salvar:hover {
+    background-color: rgb(141, 26, 122); 
+}
+
+.quadrado-botao {
     text-align: center;
     padding-top: 30px;
 }
+
+
+  .text-danger {
+    font-size: 25px;
+    color: white !important;
+  }
