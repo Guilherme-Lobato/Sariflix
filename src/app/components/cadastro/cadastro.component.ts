@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { FilmesService } from '../../service/filme.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { FilmesService } from '../../service/filme.service';
   styleUrls: ['./cadastro.component.scss']
 })
 export class CadastroComponent {
-  filmeForm: FormGroup; 
+  filmeForm: FormGroup;
   formSubmitted: boolean = false;
 
   originalFormState: any;
@@ -17,8 +17,8 @@ export class CadastroComponent {
   constructor(private http: HttpClient, private fb: FormBuilder, private filmesService: FilmesService) {
     this.filmeForm = this.fb.group({
       nomeViewer: ['', Validators.required],
-      nomeFilme: ['', Validators.required],
-      anoLancamento: ['', Validators.required],
+      filme: ['', Validators.required],
+      ano: ['', Validators.required],
       genero: ['GÊNERO', Validators.required],
       tempoCenaExplicita: [''],
       resumo: [''],
@@ -34,35 +34,26 @@ export class CadastroComponent {
 
     if (this.filmeForm.valid) {
       const filme = this.filmeForm.value;
-      this.filmesService.adicionarFilme(filme);
 
-      this.http.post('http://localhost:3000/api/movies', filme, { responseType: 'text' })
-        .subscribe(
-          response => {
-            console.log('Filme salvo com sucesso:', response);
-
-            this.filmeForm.reset(this.originalFormState, { emitEvent: false });
-            this.clearErrorMessages();
-          },
-          error => {
-            console.error('Erro ao salvar o filme:', error);
-          }
-        );
+      this.filmesService.salvarFilme(filme).subscribe(
+        () => {
+          console.log('Filme salvo com sucesso');
+          this.filmesService.fetchFilmesPendentesFromBackend();  // Atualiza a lista de filmes pendentes
+          this.filmeForm.reset(this.originalFormState, { emitEvent: false });
+          this.clearErrorMessages();
+        },
+        error => {
+          console.error('Erro ao salvar o filme:', error);
+        }
+      );
     } else {
-      console.error('Formulário inválido. Por favor, preencha todos os campos obrigatórios.');
+      console.error('Formulário inválido. Preencha todos os campos obrigatórios.');
     }
   }
 
   clearErrorMessages() {
-    Object.keys(this.filmeForm.controls).forEach(key => {
-      const control = this.filmeForm.get(key);
-
-      if (control && control.touched) {
-        control.setErrors(null);
-      }
-    });
-
     this.filmeForm.markAsPristine();
+    this.filmeForm.markAsUntouched();
     this.formSubmitted = false;
   }
 }

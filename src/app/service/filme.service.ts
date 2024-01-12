@@ -1,84 +1,122 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, tap } from 'rxjs/operators';
+
+export interface Filme {
+  _id?: string;
+  nomeViewer: string;
+  filme: string;
+  ano: number;
+  genero: string;
+  tempoCenaExplicita: boolean;
+  resumo: string;
+  tempoDuracao: number;
+  link: string;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class FilmesService {
+  private apiUrl1 = 'http://localhost:3000/api/movies';
+  private apiUrl2 = 'http://localhost:3000/api/movies/autorizados';
+
   private filmesSubject: BehaviorSubject<Filme[]> = new BehaviorSubject<Filme[]>([]);
   filmes$: Observable<Filme[]> = this.filmesSubject.asObservable();
 
-  constructor(private http: HttpClient) {
-    this.fetchFilmesFromLocalStorage();
-    this.fetchFilmesFromBackend();
-  }
+  private filmesPendentesSubject: BehaviorSubject<Filme[]> = new BehaviorSubject<Filme[]>([]);
+  filmesPendentes$: Observable<Filme[]> = this.filmesPendentesSubject.asObservable();
 
-  public adicionarFilme(filme: Filme) {
-    const filmes = [...this.filmesSubject.value, filme];
-    this.updateFilmes(filmes);
-    this.updateLocalStorage(filmes);
-  }
+  private filmesAutorizadosSubject: BehaviorSubject<Filme[]> = new BehaviorSubject<Filme[]>([]);
+  filmesAutorizados$: Observable<Filme[]> = this.filmesAutorizadosSubject.asObservable();
 
-  public excluirFilme(filmeId: string) {
-    this.http.delete(`http://localhost:3000/api/movies/${filmeId}`)
+
+  constructor(private http: HttpClient) {}
+
+  fetchFilmesFromBackend() {
+    this.http.get<Filme[]>(this.apiUrl1)
       .subscribe(
+        (filmes) => {
+          this.filmesSubject.next(filmes);
+        },
+        (error) => {
+          console.error('Erro ao buscar filmes:', error);
+        }
+      );
+  }
+
+  fetchFilmesPendentesFromBackend() {
+    this.http.get<Filme[]>(`${this.apiUrl1}/pendentes`)
+      .subscribe(
+        (filmesPendentes) => {
+          this.filmesPendentesSubject.next(filmesPendentes);
+        },
+        (error) => {
+          console.error('Erro ao buscar filmes pendentes:', error);
+        }
+      );
+  }
+
+  fetchFilmesAutorizadosFromBackend() {
+    this.http.get<Filme[]>(`${this.apiUrl2}`)
+      .subscribe(
+        (filmesAutorizados) => {
+          this.filmesAutorizadosSubject.next(filmesAutorizados);
+        },
+        (error) => {
+          console.error('Erro ao buscar filmes autorizados:', error);
+        }
+      );
+  }
+
+  salvarFilme(filme: Filme): Observable<string> {
+    return this.http.post<string>(`${this.apiUrl1}/pendentes`, filme);
+  }
+
+  excluirFilme(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl1}/${id}`).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('Erro ao excluir filme:', error);
+        return throwError('Erro ao excluir filme. Consulte o console para obter mais detalhes.');
+      }),
+      tap(() => {
+        console.log('Filme excluído com sucesso');
+        this.fetchFilmesAutorizadosFromBackend();  // Atualiza a lista de filmes autorizados
+      })
+    );
+  }
+
+  autorizarFilmePendente(filmeId: string): Observable<any> {
+    const url = `${this.apiUrl2}/${filmeId}/autorizar`;
+    return this.http.post(url, {}).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('Erro ao autorizar filme:', error);
+        return throwError('Erro ao autorizar filme. Consulte o console para obter mais detalhes.');
+      }),
+      tap(() => {
+        this.fetchFilmesAutorizadosFromBackend();  // Atualiza a lista de filmes autorizados
+        this.fetchFilmesPendentesFromBackend();  // Atualiza a lista de filmes pendentes
+      })
+    );
+  }
+
+  excluirFilmePendente(filmeId: string): Observable<any> {
+    const url = `${this.apiUrl1}/pendentes/${filmeId}`;
+    return this.http.delete(url).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('Erro ao excluir filme pendente:', error);
+        return throwError('Erro ao excluir filme pendente. Consulte o console para obter mais detalhes.');
+      }),
+      tap(
         () => {
-          console.log('Filme excluído com sucesso do backend');
-          // Atualiza os filmes no frontend após a exclusão
-          this.removeFilmeFromList(filmeId);
+          console.log('Filme excluído com sucesso');
+          this.fetchFilmesPendentesFromBackend();  // Atualiza a lista de filmes pendentes
         },
-        error => console.error('Erro ao excluir filme do backend:', error)
-      );
+        (error) => {
+          console.error('Erro ao excluir filme pendente:', error);
+        }
+      )
+    );
   }
-
-  private removeFilmeFromList(filmeId: string) {
-    // Atualiza a lista de filmes removendo o filme pelo ID
-    const filmes = this.filmesSubject.value.filter(filme => filme._id !== filmeId);
-    this.updateFilmes(filmes);
-    this.updateLocalStorage(filmes);
-  }
-
-  public fetchFilmesFromBackend() {
-    this.http.get<Filme[]>('http://localhost:3000/api/movies')
-      .subscribe(
-        filmes => {
-          this.updateFilmes(filmes);
-          this.updateLocalStorage(filmes);
-        },
-        error => console.error('Erro ao recuperar filmes do backend:', error)
-      );
-  }
-
-  private fetchFilmesFromLocalStorage() {
-    const filmesFromLocalStorage = localStorage.getItem('filmes');
-    if (filmesFromLocalStorage) {
-      const filmes = JSON.parse(filmesFromLocalStorage);
-      this.updateFilmes(filmes);
-    }
-  }
-
-  private updateFilmes(filmes: Filme[]) {
-    this.filmesSubject.next(filmes);
-  }
-
-  private updateLocalStorage(filmes: Filme[]) {
-    localStorage.setItem('filmes', JSON.stringify(filmes));
-  }
-
-  public getFilmes(): Filme[] {
-    return this.filmesSubject.value;
-  }
-}
-
-export interface Filme {
-  _id?: string;
-  nomeViewer: string;
-  nomeFilme: string;
-  anoLancamento: string;
-  genero: string;
-  tempoCenaExplicita: string;
-  resumo: string;
-  tempoDuracao: string;
-  link: string;
-}
+}  

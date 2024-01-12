@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
   private arrumaHeight(url: string): string {
     let headerHeight: string;
   
-    if (url.includes('/Lista') || url.includes('/Cadastro-Filme')) {
+    if (url.includes('/ListaFilmes') || url.includes('/CadastroFilme') || url.includes('/ListaAutorizar') ) {
       headerHeight = '200px';
     } else {
       headerHeight = '100%'; 

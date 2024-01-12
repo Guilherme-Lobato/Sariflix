@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ListaPendenteComponent } from './components/lista-pendentes/lista-pendentes.component';
+import { ListaPendentesComponent } from './components/lista-pendentes/lista-pendentes.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { HeaderComponent } from './components/header/header.component';
+import { ListaFilmesComponent } from './components/lista-filmes/lista-filmes.component';
 
 const routes: Routes = [
-  {path: 'Lista', component: ListaPendenteComponent},
-  {path: 'Cadastro-Filme', component: CadastroComponent},
+  {path: 'ListaAutorizar', component: ListaPendentesComponent},
+  {path: 'ListaFilmes', component: ListaFilmesComponent},
+  {path: 'CadastroFilme', component: CadastroComponent},
   {path: 'Inicio', component: HeaderComponent},
   { path: '', redirectTo: '', pathMatch: 'full' },
 ];

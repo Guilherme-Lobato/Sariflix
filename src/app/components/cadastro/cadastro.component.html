@@ -7,15 +7,15 @@
           <div *ngIf="filmeForm.get('nomeViewer')?.hasError('required') && (filmeForm.get('nomeViewer')?.touched || formSubmitted)" class="text-danger">Campo obrigatório</div>
         </div>
         <div class="col-md-6 mb-3">
-          <input type="text" class="form-control form-control-lg FILME" placeholder="FILME" aria-label="FILME" formControlName="nomeFilme">
-          <div *ngIf="filmeForm.get('nomeFilme')?.hasError('required') && (filmeForm.get('nomeFilme')?.touched || formSubmitted)" class="text-danger">Campo obrigatório</div>
+          <input type="text" class="form-control form-control-lg FILME" placeholder="FILME" aria-label="FILME" formControlName="filme">
+          <div *ngIf="filmeForm.get('filme')?.hasError('required') && (filmeForm.get('filme')?.touched || formSubmitted)" class="text-danger">Campo obrigatório</div>
         </div>
       </div>
 
       <div class="row">
         <div class="col-md-6 mb-3">
-          <input type="text" class="form-control form-control-lg ANO" placeholder="ANO DE LANÇAMENTO" aria-label="ANO DE LANÇAMENTO" formControlName="anoLancamento">
-          <div *ngIf="filmeForm.get('anoLancamento')?.hasError('required') && (filmeForm.get('anoLancamento')?.touched || formSubmitted)" class="text-danger">Campo obrigatório</div>
+          <input type="text" class="form-control form-control-lg ANO" placeholder="ANO DE LANÇAMENTO" aria-label="ANO DE LANÇAMENTO" formControlName="ano">
+          <div *ngIf="filmeForm.get('ano')?.hasError('required') && (filmeForm.get('ano')?.touched || formSubmitted)" class="text-danger">Campo obrigatório</div>
         </div>
         <div class="col-md-6 mb-3">
           <select class="form-select form-control-lg" formControlName="genero" aria-label="Default select example">
@@ -74,7 +74,6 @@
           <div *ngIf="filmeForm.get('link')?.hasError('required') && (filmeForm.get('link')?.touched || formSubmitted)" class="text-danger">Campo obrigatório</div>
         </div>
       </div>
-
       <div class="quadrado-botao">
         <button class="salvar" (click)="salvarFilme()">SALVA AÍ ARROMBADO</button>
       </div>
