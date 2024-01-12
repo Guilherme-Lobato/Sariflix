@@ -19,16 +19,14 @@ export class ListaFilmesComponent implements OnInit {
 
   excluirFilme(filme: Filme | undefined) {
     if (filme && filme._id) {
-      this.filmesService.excluirFilme(filme._id)
-        .subscribe(
-          () => {
-            console.log('Filme excluído com sucesso');
-            this.filmesService.fetchFilmesAutorizadosFromBackend(); // Atualiza a lista de filmes autorizados
-          },
-          (error: any) => {
-            console.error('Erro ao excluir filme:', error);
-          }
-        );
+      this.filmesService.excluirFilme(filme._id).subscribe(
+        () => {
+          console.log('Filme excluído com sucesso');
+        },
+        (error) => {
+          console.error('Erro ao excluir filme:', error);
+        }
+      );
     }
   }
 }

@@ -74,16 +74,24 @@ export class FilmesService {
     return this.http.post<string>(`${this.apiUrl1}/pendentes`, filme);
   }
 
-  excluirFilme(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl1}/${id}`).pipe(
+  
+
+  excluirFilme(filmeId: string): Observable<any> {
+    const url = `${this.apiUrl2}/${filmeId}/excluir`;
+    return this.http.delete(url).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error('Erro ao excluir filme:', error);
         return throwError('Erro ao excluir filme. Consulte o console para obter mais detalhes.');
       }),
-      tap(() => {
-        console.log('Filme excluído com sucesso');
-        this.fetchFilmesAutorizadosFromBackend();  // Atualiza a lista de filmes autorizados
-      })
+      tap(
+        () => {
+          console.log('Filme excluído com sucesso');
+          this.fetchFilmesAutorizadosFromBackend();  
+        },
+        (error) => {
+          console.error('Erro ao excluir filme:', error);
+        }
+      )
     );
   }
 
