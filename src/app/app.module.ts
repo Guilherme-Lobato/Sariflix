@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FilmesService } from './service/filme.service';
 import { ListaFilmesComponent } from './components/lista-filmes/lista-filmes.component';
+import { InicioComponent } from './components/inicio/inicio.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ListaFilmesComponent } from './components/lista-filmes/lista-filmes.com
     ListaPendentesComponent,
     CadastroComponent,
     ListaFilmesComponent,
+    InicioComponent,
   ],
   imports: [
     BrowserModule,

@@ -159,3 +159,33 @@ label{
 .botao-filtro:hover {
   background-color: rgb(141, 26, 122);
 }
+
+@media (max-width: 10248px) {
+  .container {
+    padding: 20px 10px; /* Reduza o preenchimento para telas menores */
+  }
+
+  .lista {
+    height: auto; /* Remova a altura fixa para permitir que a altura seja determinada pelo conteúdo */
+    overflow: auto;
+  }
+
+  .table {
+    font-size: 20px; /* Reduza o tamanho da fonte para telas menores */
+  }
+
+  .filtro label {
+    font-size: 18px; /* Ajuste o tamanho da fonte dos rótulos do formulário para telas menores */
+  }
+
+  .filtro input,
+  .filtro select {
+    width: 100%; /* Faça os campos do formulário ocuparem 100% da largura em telas menores */
+    margin-bottom: 10px; /* Adicione um espaçamento inferior entre os campos do formulário */
+  }
+
+  .botao-filtro {
+    width: 100%; /* Faça o botão de filtro ocupar 100% da largura em telas menores */
+    margin-top: 10px; /* Adicione um espaçamento superior para o botão de filtro */
+  }
+}

@@ -1,8 +1,7 @@
 .header-component {
   background-color: var(--cor-principal);
-  min-height: var(--header-height, 500px); 
+  min-height: var(--header-height, 500px);
 }
-
 
 .menu {
   padding-top: 80px;
@@ -12,24 +11,25 @@
 
 .menu ul {
   display: flex;
-  justify-content: space-around; 
-  list-style: none; 
+  flex-wrap: wrap; /* Permite que os itens se movam para a próxima linha em telas menores */
+  justify-content: space-around;
+  list-style: none;
   padding: 0;
 }
 
 .menu ul li {
-  margin: 0 30px; 
+  margin: 0 10px; /* Reduza o espaçamento entre os itens do menu em telas menores */
 }
 
 .menu ul a {
   font-family: 'Roboto', sans-serif;
   font-weight: bold;
   text-decoration: none;
-  padding: 20px 30px;
-  font-size: 30px;
+  padding: 15px 20px; /* Reduza o preenchimento dos itens do menu em telas menores */
+  font-size: 20px; /* Reduza o tamanho da fonte em telas menores */
   color: white;
-  border: 6px solid transparent;
-  border-radius: 15px;
+  border: 4px solid transparent;
+  border-radius: 10px;
   transition: border-color 0.3s ease;
 }
 
@@ -44,4 +44,16 @@
 .menu ul a:hover,
 .menu ul li.active a {
   border-color: white;
+}
+
+/* Adaptação para telas menores */
+@media (max-width: 768px) {
+  .menu {
+    padding-top: 20px; /* Reduza o preenchimento do menu em telas menores */
+    flex-direction: column; /* Empilhe os itens do menu verticalmente */
+  }
+
+  .menu ul li {
+    margin: 10px 0; /* Ajuste o espaçamento vertical entre os itens do menu */
+  }
 }
