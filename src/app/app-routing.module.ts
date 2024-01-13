@@ -9,8 +9,7 @@ const routes: Routes = [
   {path: 'ListaAutorizar', component: ListaPendentesComponent},
   {path: 'ListaFilmes', component: ListaFilmesComponent},
   {path: 'CadastroFilme', component: CadastroComponent},
-  {path: 'Inicio', component: InicioComponent},
-  { path: '', redirectTo: '', pathMatch: 'full' },
+  { path: 'Inicio', redirectTo: 'Inicio', pathMatch: 'full' }
 ];
 
 @NgModule({

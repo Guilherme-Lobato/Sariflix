@@ -23,22 +23,16 @@ body {
     z-index: 2;
   }
 
-  tbody {
-    overflow-y: auto;
-  }
-  
   .table {
     border-collapse: collapse;
     width: 100%;
     max-width: 100%;
     font-size: 30px;
-    overflow-y: auto;
   }
   
   th, td {
     padding: 12px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
     margin: 4px;
   }
   
@@ -69,7 +63,7 @@ body {
   }
   
   td:not(:last-child), th:not(:last-child) {
-    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
   }
   
   h2 {
@@ -166,18 +160,18 @@ body {
     background-color: rgb(141, 26, 122);
   }
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1485px) {
     .container {
-      padding: 20px 10px; /* Reduza o preenchimento para telas menores */
+      padding: 20px 10px;
+      height: 55vh;
     }
   
     .lista {
-      height: auto; /* Remova a altura fixa para permitir que a altura seja determinada pelo conteúdo */
-      overflow: auto;
+      height: 100%;
+      width: 100%;
     }
-  
     .table {
-      font-size: 20px; /* Reduza o tamanho da fonte para telas menores */
+      min-width: 100%;
     }
   
     .filtro label {
@@ -193,6 +187,30 @@ body {
     .botao-filtro {
       width: 100%; /* Faça o botão de filtro ocupar 100% da largura em telas menores */
       margin-top: 10px; /* Adicione um espaçamento superior para o botão de filtro */
+    }
+
+    .th {
+      font-size: 18px; /* Ajuste o tamanho da fonte para telas menores */
+      white-space: nowrap;
+      display: block;
+    }
+
+    .td {
+      font-size: 10px;
+      display: block;
+    }
+
+    .ano-lancamento,
+    .tempo-duracao,
+    .genero,
+    .link,
+    .nome-filme,
+    .acoes{
+      max-width: 30px;
+      overflow: hidden; 
+      white-space: nowrap; 
+      padding-right: 5px;
+      margin-right: 5px;
     }
   }
   
