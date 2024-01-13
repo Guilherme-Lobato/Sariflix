@@ -66,7 +66,7 @@
 
       <div class="row">
         <div class="col-md-6 mb-3">
-          <input type="text" class="form-control form-control-lg TEMPO" placeholder="TEMPO DE DURAÇÃO DO FILME (Ex: 1:53:23)" aria-label="TEMPO DE DURAÇÃO DO FILME" formControlName="tempoDuracao">
+          <input type="text" class="form-control form-control-lg TEMPO" placeholder="TEMPO DE DURAÇÃO DO FILME (Ex: 1h 44m)" aria-label="TEMPO DE DURAÇÃO DO FILME" formControlName="tempoDuracao">
           <div *ngIf="filmeForm.get('tempoDuracao')?.hasError('required') && (filmeForm.get('tempoDuracao')?.touched || formSubmitted)" class="text-danger">Campo obrigatório</div>
         </div>
         <div class="col-md-6 mb-3">

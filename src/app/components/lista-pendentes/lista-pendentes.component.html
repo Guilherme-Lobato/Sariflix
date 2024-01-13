@@ -63,7 +63,9 @@
           <td class="ano-lancamento">{{ filme.ano }}</td>
           <td class="genero">{{ filme.genero }}</td>
           <td class="tempo-duracao">{{ filme.tempoDuracao }}</td>
-          <td class="link">{{ filme.link }}</td>
+          <td class="link">
+            <a *ngIf="filme.link" [href]="filme.link" target="_blank">{{ filme.link }}</a>
+          </td>
           <td class="acoes">
             <button class="autorizar" (click)="autorizarFilme(filme)">Autorizar</button>
             <button class="excluir" (click)="excluirFilme(filme)">Excluir</button>

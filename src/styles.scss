@@ -10,8 +10,9 @@
 
 
   :root{
-   --cor-principal:rgb(243, 106, 255);
+  --cor-inicial: rgb(170, 73, 179);
+  --cor-final: rgb(80, 36, 89);
   }
   
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;   background: linear-gradient(to right, var(--cor-inicial), var(--cor-final), #ffffff);}
