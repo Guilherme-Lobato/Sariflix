@@ -1,5 +1,49 @@
-<div class="container">
-    <h2>Lista de Filmes</h2>
+<body>
+  <div class="container">
+    <div class="filtro">
+      <form [formGroup]="filtroForm">
+        <label><input placeholder="Nome Viewer" formControlName="nomeViewer" /></label>
+        <label><input placeholder="Filme" formControlName="filme" /></label>
+        <label><input placeholder="Ano" formControlName="ano" /></label>
+        <label formControlName="genero">
+          <select class="form-select form-control-lg">
+            <option selected disabled>GÊNERO</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Feminino">Feminino</option>
+            <option value="Outro">Outro</option>
+            <option value="Gremio">Grêmio</option>
+            <option value="Acao">Ação</option>
+            <option value="Aventura">Aventura</option>
+            <option value="CinemaDeArte">Cinema de arte</option>
+            <option value="Chanchada">Chanchada</option>
+            <option value="Comedia">Comédia</option>
+            <option value="ComediaDeAcao">Comédia de ação</option>
+            <option value="ComediaDeTerror">Comédia de terror</option>
+            <option value="ComediaDramatica">Comédia dramática</option>
+            <option value="ComediaRomantica">Comédia romântica</option>
+            <option value="Danca">Dança</option>
+            <option value="Documentario">Documentário</option>
+            <option value="Docuficcao">Docuficção</option>
+            <option value="Drama">Drama</option>
+            <option value="Espionagem">Espionagem</option>
+            <option value="Faroeste">Faroeste</option>
+            <option value="Fantasia">Fantasia</option>
+            <option value="FantasiaCientifica">Fantasia científica</option>
+            <option value="FiccaoCientifica">Ficção científica</option>
+            <option value="FilmesComTruques">Filmes com truques</option>
+            <option value="FilmesDeGuerra">Filmes de guerra</option>
+            <option value="Misterio">Mistério</option>
+            <option value="Musical">Musical</option>
+            <option value="FilmePolicial">Filme policial</option>
+            <option value="Romance">Romance</option>
+            <option value="Terror">Terror</option>
+            <option value="Thriller">Thriller</option>
+          </select>
+        </label>
+        <button class="botao-filtro" type="button" (click)="aplicarFiltro()">Aplicar Filtro</button>
+      </form>
+    </div>
+    <div class="lista">
     <table class="table">
       <thead>
         <tr>
@@ -9,7 +53,7 @@
           <th class="genero">Gênero</th>
           <th class="tempo-duracao">Duração</th>
           <th class="link">Link</th>
-          <th>Ações</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -20,11 +64,12 @@
           <td class="genero">{{ filme.genero }}</td>
           <td class="tempo-duracao">{{ filme.tempoDuracao }}</td>
           <td class="link">{{ filme.link }}</td>
-          <td>
-            <button (click)="excluirFilme(filme)">Excluir</button>
+          <td class="acoes">
+            <button class="excluir" (click)="excluirFilme(filme)">Excluir</button>
           </td>
         </tr>
       </tbody>
     </table>
+    </div>
   </div>
-  
+</body>

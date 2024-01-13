@@ -127,4 +127,28 @@ export class FilmesService {
       )
     );
   }
+
+  aplicarFiltroPendentes(filtro: any): void {
+    const filmesFiltrados = this.filmesPendentesSubject.value.filter(filme => {
+      return (
+        (!filtro.nomeViewer || filme.nomeViewer.toLowerCase().startsWith(filtro.nomeViewer.toLowerCase())) &&
+        (!filtro.filme || filme.filme.toLowerCase().startsWith(filtro.filme.toLowerCase())) &&
+        (!filtro.ano || filme.ano === filtro.ano) &&
+        (!filtro.genero || filme.genero.toLowerCase().startsWith(filtro.genero.toLowerCase()))
+      );
+    });
+    this.filmesPendentesSubject.next(filmesFiltrados);
+  }  
+
+  aplicarFiltroAutorizados(filtro: any): void {
+    const filmesFiltrados = this.filmesAutorizadosSubject.value.filter(filme => {
+      return (
+        (!filtro.nomeViewer || filme.nomeViewer.toLowerCase().startsWith(filtro.nomeViewer.toLowerCase())) &&
+        (!filtro.filme || filme.filme.toLowerCase().startsWith(filtro.filme.toLowerCase())) &&
+        (!filtro.ano || filme.ano === filtro.ano) &&
+        (!filtro.genero || filme.genero.toLowerCase().startsWith(filtro.genero.toLowerCase()))
+      );
+    });
+    this.filmesPendentesSubject.next(filmesFiltrados);
+  }  
 }  

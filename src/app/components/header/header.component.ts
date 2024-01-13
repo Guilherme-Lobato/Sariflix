@@ -36,5 +36,7 @@ export class HeaderComponent implements OnInit {
     return headerHeight;
   }
   
-  
+  isCurrentPage(path: string): boolean {
+    return this.router.url === path;
+  }
 }

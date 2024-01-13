@@ -1,6 +1,6 @@
 <body>
   <div class="container">
-    <form [formGroup]="filmeForm">
+    <form [formGroup]="filmeForm" class="rounded-form">
       <div class="row">
         <div class="col-md-6 mb-3">
           <input type="text" class="form-control form-control-lg VIEWER" placeholder="NOME VIEWER" aria-label="NOME VIEWER" formControlName="nomeViewer">
@@ -14,7 +14,7 @@
 
       <div class="row">
         <div class="col-md-6 mb-3">
-          <input type="text" class="form-control form-control-lg ANO" placeholder="ANO DE LANÇAMENTO" aria-label="ANO DE LANÇAMENTO" formControlName="ano">
+          <input type="number" class="form-control form-control-lg ANO" placeholder="ANO DE LANÇAMENTO" aria-label="ANO DE LANÇAMENTO" formControlName="ano">
           <div *ngIf="filmeForm.get('ano')?.hasError('required') && (filmeForm.get('ano')?.touched || formSubmitted)" class="text-danger">Campo obrigatório</div>
         </div>
         <div class="col-md-6 mb-3">
@@ -57,10 +57,10 @@
 
       <div class="row">
         <div class="col-md-6 mb-3 quadrado-texto">
-          <textarea class="form-control form-control-lg caixa-texto" placeholder="Tempo que tem cena explícita (Ex: 11:38 até 12:02)" aria-label="Texto" rows="5" formControlName="tempoCenaExplicita"></textarea>
+          <textarea class="form-control form-control-lg caixa-texto" placeholder="CENA EXPLÍCITA? (EX: 11:38 até 12:02)" aria-label="Texto" rows="5" formControlName="tempoCenaExplicita"></textarea>
         </div>
         <div class="col-md-6 mb-3 quadrado-resumo">
-          <textarea class="form-control form-control-lg caixa-texto" placeholder="Resumo/Sinopse" aria-label="Texto" rows="5" formControlName="resumo"></textarea>
+          <textarea class="form-control form-control-lg caixa-texto" placeholder="RESUMO/SINOPSE" aria-label="Texto" rows="5" formControlName="resumo"></textarea>
         </div>
       </div>
 

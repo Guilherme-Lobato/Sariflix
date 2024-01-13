@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FilmesService, Filme } from '../../service/filme.service';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-lista-pendentes',
@@ -9,12 +10,21 @@ import { Observable } from 'rxjs';
 })
 export class ListaPendentesComponent implements OnInit {
   filmes$!: Observable<Filme[]>;
+  filtroForm!: FormGroup;
 
-  constructor(private filmesService: FilmesService) {}
+  constructor(
+    private filmesService: FilmesService,
+    private formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.filmes$ = this.filmesService.filmesPendentes$;
     this.filmesService.fetchFilmesPendentesFromBackend();
+    this.filtroForm = this.formBuilder.group({
+      nomeViewer: [''],
+      filme: [''],
+      ano: [''],
+      genero: [''],
+    });
   }
 
   adicionarFilme(filme: Filme) {
@@ -50,7 +60,7 @@ export class ListaPendentesComponent implements OnInit {
       );
     }
   }
-  
+
   excluirFilme(filme: Filme | undefined) {
     if (filme && filme._id) {
       this.filmesService.excluirFilmePendente(filme._id).subscribe(
@@ -62,5 +72,10 @@ export class ListaPendentesComponent implements OnInit {
         }
       );
     }
+  }
+
+  aplicarFiltro() {
+    const filtro = this.filtroForm.value;
+    this.filmesService.aplicarFiltroPendentes(filtro);
   }
 }

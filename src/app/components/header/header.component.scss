@@ -10,10 +10,38 @@
   justify-content: center;
 }
 
+.menu ul {
+  display: flex;
+  justify-content: space-around; 
+  list-style: none; 
+  padding: 0;
+}
+
+.menu ul li {
+  margin: 0 30px; 
+}
+
 .menu ul a {
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
   text-decoration: none;
-  padding: 100px;
+  padding: 20px 30px;
   font-size: 30px;
   color: white;
+  border: 6px solid transparent;
+  border-radius: 15px;
+  transition: border-color 0.3s ease;
+}
+
+.menu ul a:hover {
+  border-color: white;
+}
+
+.menu ul a.active {
+  border-color: white;
+}
+
+.menu ul a:hover,
+.menu ul li.active a {
+  border-color: white;
 }

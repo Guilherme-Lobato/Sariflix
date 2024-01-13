@@ -1,42 +1,59 @@
+body {
+  height: 100%;
+  background-color: var(--cor-principal);
+}
 
-  body {
-    height: 100%;
-    background-color: var(--cor-principal);
-  }
+.container {
+  padding-top: 90px;
+}
 
-  .container {
-    padding-top: 120px;
-  }
+form.rounded-form {
+  background: linear-gradient(to bottom right, rgb(148, 104, 163), rgb(104, 42, 114));
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  color: white; /* Adicionei esta linha para garantir que o texto seja visível no degradê */
+}
 
+/* Adicione a seguinte regra para alterar a cor da borda dos inputs para preto */
+form.rounded-form input,
+form.rounded-form select,
+form.rounded-form textarea {
+  border: 1px solid black;
+}
 
-  .caixa-texto {
-    width: 540px;
-  }
+/* Adicione esta regra para garantir que os quadrados de texto tenham a mesma largura que os outros campos */
+.quadrado-texto,
+.quadrado-resumo {
+  width: 100%;
+}
 
+.caixa-texto {
+  width: 100%; /* Defina a largura desejada */
+}
 
-  .salvar {
-    height: 80px;
-    width: 200px;
-    color: rgb(255, 255, 255);
-    background-color: rgb(104, 42, 114);
-    text-decoration: none;
-    border: none;
-    outline: none;
-    border-radius: 20px;
-    transition: background-color 0.3s ease; 
+.salvar {
+  height: 80px;
+  width: 200px;
+  color: rgb(255, 255, 255);
+  background-color: rgb(85, 29, 94);
+  text-decoration: none;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
 }
 
 .salvar:hover {
-    background-color: rgb(141, 26, 122); 
+  background-color: rgb(141, 26, 122);
 }
 
 .quadrado-botao {
-    text-align: center;
-    padding-top: 30px;
+  text-align: center;
+  padding-top: 30px;
 }
 
-
-  .text-danger {
-    font-size: 25px;
-    color: white !important;
-  }
+.text-danger {
+  font-size: 25px;
+  color: white !important;
+}

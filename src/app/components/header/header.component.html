@@ -1,16 +1,24 @@
 <div class="header-component">
-    <nav class="menu">
-        <ul>
+  <nav class="menu">
+    <ul>
+      <li [class.active]="isCurrentPage('/Inicio')">
         <a [routerLink]="['/Inicio']">INICIO</a>
-        </ul>
-        <ul>
-        <a [routerLink]="['/ListaFilmes']">LISTA FILMES</a>
-        </ul>
-        <ul>
+      </li>
+    </ul>
+    <ul>
+      <li [class.active]="isCurrentPage('/ListaFilmes')">
+        <a [routerLink]="['/ListaFilmes']">LISTA DE FILMES</a>
+      </li>
+    </ul>
+    <ul>
+      <li [class.active]="isCurrentPage('/ListaAutorizar')">
         <a [routerLink]="['/ListaAutorizar']">LISTA PENDENTE</a>
-        </ul>
-        <ul>
+      </li>
+    </ul>
+    <ul>
+      <li [class.active]="isCurrentPage('/CadastroFilme')">
         <a [routerLink]="['/CadastroFilme']">RECOMENDAR FILME</a>
-        </ul>
-    </nav>
+      </li>
+    </ul>
+  </nav>
 </div>

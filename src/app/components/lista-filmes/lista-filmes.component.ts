@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FilmesService, Filme } from '../../service/filme.service';
 import { Observable } from 'rxjs';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-lista-filmes',
@@ -9,12 +10,22 @@ import { Observable } from 'rxjs';
 })
 export class ListaFilmesComponent implements OnInit {
   filmes$!: Observable<Filme[]>;
+  filtroForm!: FormGroup;
 
-  constructor(private filmesService: FilmesService) {}
+  constructor(
+    private filmesService: FilmesService,
+    private formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.filmes$ = this.filmesService.filmesAutorizados$;
     this.filmesService.fetchFilmesAutorizadosFromBackend();
+    
+    this.filtroForm = this.formBuilder.group({
+      nomeViewer: [''],
+      filme: [''],
+      ano: [''],
+      genero: [''],
+    });
   }
 
   excluirFilme(filme: Filme | undefined) {
@@ -28,5 +39,10 @@ export class ListaFilmesComponent implements OnInit {
         }
       );
     }
+  }
+
+  aplicarFiltro() {
+    const filtro = this.filtroForm.value;
+    this.filmesService.aplicarFiltroAutorizados(filtro);
   }
 }
