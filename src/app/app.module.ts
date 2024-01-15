@@ -20,6 +20,7 @@ import { InicioComponent } from './components/inicio/inicio.component';
     CadastroComponent,
     ListaFilmesComponent,
     InicioComponent,
+    
   ],
   imports: [
     BrowserModule,

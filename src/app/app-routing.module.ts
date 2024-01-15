@@ -6,11 +6,13 @@ import { InicioComponent } from './components/inicio/inicio.component';
 import { ListaFilmesComponent } from './components/lista-filmes/lista-filmes.component';
 
 const routes: Routes = [
-  {path: 'ListaAutorizar', component: ListaPendentesComponent},
-  {path: 'ListaFilmes', component: ListaFilmesComponent},
-  {path: 'CadastroFilme', component: CadastroComponent},
-  { path: 'Inicio', redirectTo: 'Inicio', pathMatch: 'full' }
+  { path: 'ListaAutorizar', component: ListaPendentesComponent },
+  { path: 'ListaFilmes', component: ListaFilmesComponent },
+  { path: 'CadastroFilme', component: CadastroComponent },
+  { path: 'Inicio/:videoId', component: InicioComponent },
+  { path: 'Inicio', component: InicioComponent },
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

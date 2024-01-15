@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FilmesService, Filme } from '../../service/filme.service';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { SharedService } from '../../service/shared.service';
 
 @Component({
   selector: 'app-lista-filmes',
@@ -14,7 +15,9 @@ export class ListaFilmesComponent implements OnInit {
 
   constructor(
     private filmesService: FilmesService,
-    private formBuilder: FormBuilder) {}
+    private formBuilder: FormBuilder,
+    private sharedService: SharedService 
+  ) {}
 
   ngOnInit() {
     this.filmes$ = this.filmesService.filmesAutorizados$;
@@ -28,8 +31,8 @@ export class ListaFilmesComponent implements OnInit {
     });
   }
 
-  excluirFilme(filme: Filme | undefined) {
-    if (filme && filme._id) {
+  excluirFilme(filme: Filme): void {
+    if (filme._id) {
       this.filmesService.excluirFilme(filme._id).subscribe(
         () => {
           console.log('Filme excluído com sucesso');
@@ -41,8 +44,27 @@ export class ListaFilmesComponent implements OnInit {
     }
   }
 
-  aplicarFiltro() {
+  aplicarFiltro(): void {
     const filtro = this.filtroForm.value;
     this.filmesService.aplicarFiltroAutorizados(filtro);
   }
+
+  assistirFilme(videoId: string | undefined): void {
+    console.log('VideoId a ser assistido:', videoId);
+  
+    if (videoId) {
+      this.sharedService.setSelectedVideoId(videoId);
+    } else {
+      console.error('ID do vídeo não está definido.');
+    }
+  }
+
+  abrirLink(link: string, videoId: string | null): void {
+    const isYouTubeLink = this.filmesService.isYouTubeLink(link);
+
+    if (isYouTubeLink && videoId) {
+    } else {
+        window.open(link, '_blank');
+    }
+}
 }

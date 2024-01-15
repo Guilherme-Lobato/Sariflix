@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { FilmesService } from '../../service/filme.service';
+import { SharedService } from '../../service/shared.service';
 
 @Component({
   selector: 'app-cadastro',
@@ -14,7 +14,11 @@ export class CadastroComponent {
 
   originalFormState: any;
 
-  constructor(private http: HttpClient, private fb: FormBuilder, private filmesService: FilmesService) {
+  constructor(
+    private fb: FormBuilder, 
+    private filmesService: FilmesService,
+    private sharedService: SharedService) {
+
     this.filmeForm = this.fb.group({
       nomeViewer: ['', Validators.required],
       filme: ['', Validators.required],
@@ -31,14 +35,14 @@ export class CadastroComponent {
 
   salvarFilme() {
     this.formSubmitted = true;
-
+  
     if (this.filmeForm.valid) {
       const filme = this.filmeForm.value;
-
+      
       this.filmesService.salvarFilme(filme).subscribe(
         () => {
           console.log('Filme salvo com sucesso');
-          this.filmesService.fetchFilmesPendentesFromBackend();  // Atualiza a lista de filmes pendentes
+          this.filmesService.fetchFilmesPendentesFromBackend(); 
           this.filmeForm.reset(this.originalFormState, { emitEvent: false });
           this.clearErrorMessages();
         },
@@ -50,6 +54,9 @@ export class CadastroComponent {
       console.error('Formulário inválido. Preencha todos os campos obrigatórios.');
     }
   }
+
+  
+  
 
   clearErrorMessages() {
     this.filmeForm.markAsPristine();

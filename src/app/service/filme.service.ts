@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
+import { SharedService } from './shared.service';
 
 export interface Filme {
   _id?: string;
@@ -13,6 +14,7 @@ export interface Filme {
   resumo: string;
   tempoDuracao: number;
   link: string;
+  videoId: string; 
 }
 
 @Injectable({
@@ -32,7 +34,10 @@ export class FilmesService {
   filmesAutorizados$: Observable<Filme[]> = this.filmesAutorizadosSubject.asObservable();
 
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private sharedService: SharedService
+     ) {}
 
   fetchFilmesFromBackend() {
     this.http.get<Filme[]>(this.apiUrl1)
@@ -71,10 +76,42 @@ export class FilmesService {
   }
 
   salvarFilme(filme: Filme): Observable<string> {
-    return this.http.post<string>(`${this.apiUrl1}/pendentes`, filme);
+    let videoId: string | null;
+
+    if (this.isYouTubeLink(filme.link)) {
+        videoId = this.extractYouTubeVideoId(filme.link);
+
+        if (!videoId) {
+            return throwError('Erro ao extrair o ID do vídeo do YouTube.');
+        }
+    } else {
+        videoId = null;
+    }
+    filme.videoId = videoId ?? '';  
+    console.log('Filme antes da solicitação HTTP:', filme);
+    return this.http.post<string>(`${this.apiUrl1}/pendentes`, filme).pipe(
+        tap(() => {
+            if (videoId) {
+                this.sharedService.setSelectedVideoId(videoId);
+            }
+        })
+    );
+}
+
+
+  public isYouTubeLink(link: string): boolean {
+    const regExp = /^(?:(?:https?:)?\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    return regExp.test(link);
+  }
+  
+  
+  public extractYouTubeVideoId(link: string): string | null {
+    const regExp = /^(?:(?:https?:)?\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    
+    const match = link.match(regExp);
+    return match ? match[1] : null;
   }
 
-  
 
   excluirFilme(filmeId: string): Observable<any> {
     const url = `${this.apiUrl2}/${filmeId}/excluir`;
@@ -149,6 +186,6 @@ export class FilmesService {
         (!filtro.genero || filme.genero.toLowerCase().startsWith(filtro.genero.toLowerCase()))
       );
     });
-    this.filmesPendentesSubject.next(filmesFiltrados);
+    this.filmesAutorizadosSubject.next(filmesFiltrados);
   }  
 }  

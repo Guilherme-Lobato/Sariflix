@@ -1,0 +1,19 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .videos-container {
+    text-align: center;
+    padding-top: 80px;
+    padding-bottom: 50px;
+  }
+  
+  .video-item {
+    position: relative;
+  }
+  

@@ -64,8 +64,9 @@
           <td class="genero">{{ filme.genero }}</td>
           <td class="tempo-duracao">{{ filme.tempoDuracao }}</td>
           <td class="link">
-            <a *ngIf="filme.link" [href]="filme.link" target="_blank">{{ filme.link }}</a>
-          </td>
+            <a *ngIf="filme.link" [routerLink]="['/Inicio', { videoId: filme.videoId }]" 
+                (click)="abrirLink(filme.link, filme.videoId)">Assistir</a>
+          </td>          
           <td class="acoes">
             <button class="excluir" (click)="excluirFilme(filme)">Excluir</button>
           </td>
