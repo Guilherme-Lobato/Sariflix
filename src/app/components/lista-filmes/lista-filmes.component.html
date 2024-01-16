@@ -54,6 +54,7 @@
           <th class="tempo-duracao">Duração</th>
           <th class="link">Link</th>
           <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -65,8 +66,20 @@
           <td class="tempo-duracao">{{ filme.tempoDuracao }}</td>
           <td class="link">
             <a *ngIf="filme.link" [routerLink]="['/Inicio', { videoId: filme.videoId }]" 
-                (click)="abrirLink(filme.link, filme.videoId)">Assistir</a>
-          </td>          
+              (click)="abrirLink(filme.link, filme.videoId)">Assistir</a>
+          </td>
+          <td class="avaliacao-celula">
+            <div class="avaliacao-caixa">
+              <div>
+                <form [formGroup]="avaliacaoForm">
+                  <select id="avaliacao" class="avaliacao" formControlName="avaliacao">
+                    <option [ngValue]="null">AVALIAÇÃO</option>
+                    <option *ngFor="let i of avaliacoes" [ngValue]="i">{{ '⭐'.repeat(i) }}</option>
+                  </select>
+                </form>
+              </div>
+            </div>
+          </td>
           <td class="acoes">
             <button class="excluir" (click)="excluirFilme(filme)">Excluir</button>
           </td>

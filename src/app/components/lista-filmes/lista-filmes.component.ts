@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FilmesService, Filme } from '../../service/filme.service';
 import { Observable } from 'rxjs';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { SharedService } from '../../service/shared.service';
 
 @Component({
@@ -12,12 +12,18 @@ import { SharedService } from '../../service/shared.service';
 export class ListaFilmesComponent implements OnInit {
   filmes$!: Observable<Filme[]>;
   filtroForm!: FormGroup;
+  avaliacaoForm!: FormGroup;
+  avaliacoes: number[] = [1, 2, 3, 4, 5];
+  fb: FormBuilder;
+  filmeSelecionado: Filme | undefined;
 
   constructor(
     private filmesService: FilmesService,
     private formBuilder: FormBuilder,
     private sharedService: SharedService 
-  ) {}
+  ) {
+    this.fb = formBuilder;
+  }
 
   ngOnInit() {
     this.filmes$ = this.filmesService.filmesAutorizados$;
@@ -28,6 +34,10 @@ export class ListaFilmesComponent implements OnInit {
       filme: [''],
       ano: [''],
       genero: [''],
+    });
+
+    this.avaliacaoForm = this.formBuilder.group({
+      avaliacao: [null],
     });
   }
 
@@ -49,14 +59,17 @@ export class ListaFilmesComponent implements OnInit {
     this.filmesService.aplicarFiltroAutorizados(filtro);
   }
 
-  assistirFilme(videoId: string | undefined): void {
-    console.log('VideoId a ser assistido:', videoId);
-  
-    if (videoId) {
-      this.sharedService.setSelectedVideoId(videoId);
+  assistirFilme(filme: Filme | undefined): void {
+    console.log('VideoId a ser assistido:', filme?.videoId);
+
+    if (filme?.videoId) {
+      this.sharedService.setSelectedVideoId(filme.videoId);
     } else {
       console.error('ID do vídeo não está definido.');
     }
+
+    // Atualizamos a propriedade filmeSelecionado
+    this.filmeSelecionado = filme;
   }
 
   abrirLink(link: string, videoId: string | null): void {
@@ -66,5 +79,30 @@ export class ListaFilmesComponent implements OnInit {
     } else {
         window.open(link, '_blank');
     }
-}
+  }
+  
+  salvarAvaliacao(filme: Filme | undefined, avaliacao: number | null): void {
+    if (filme?._id && avaliacao !== null) {
+      this.filmesService.salvarAvaliacao(filme._id, avaliacao).subscribe(
+        () => {
+          console.log('Avaliação salva com sucesso');
+          // Atualize a lista de filmes autorizados se necessário
+          this.filmesService.fetchFilmesAutorizadosFromBackend();
+        },
+        (error) => {
+          console.error('Erro ao salvar avaliação:', error);
+        }
+      );
+    } else {
+      console.error('ID do filme ou avaliação não está definido.');
+    }
+  }
+
+  onSelectAvaliacao(): void {
+    const avaliacaoControl = this.avaliacaoForm.get('avaliacao');
+    if (avaliacaoControl && this.filmeSelecionado) {
+      const avaliacao = avaliacaoControl.value;
+      this.salvarAvaliacao(this.filmeSelecionado, avaliacao);
+    }
+  }
 }

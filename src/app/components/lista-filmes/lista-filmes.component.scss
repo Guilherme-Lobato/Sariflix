@@ -90,16 +90,24 @@ th {
 .ano-lancamento,
 .tempo-duracao,
 .genero {
-  max-width: 30px;
+  max-width: 50px;
   overflow: hidden;
   white-space: nowrap; 
   padding-right: 10px;
   margin-right: 10px;
 }
 
-.link,
+
 .nome-filme {
   max-width: 80px;
+  overflow: hidden; 
+  white-space: nowrap; 
+  padding-right: 10px;
+  margin-right: 10px;
+}
+
+.link {
+  max-width: 50px;
   overflow: hidden; 
   white-space: nowrap; 
   padding-right: 10px;
@@ -158,6 +166,17 @@ label{
 
 .botao-filtro:hover {
   background-color: rgb(141, 26, 122);
+}
+
+.avaliacao {
+  max-width: 170px; 
+  font-size: 25px; 
+  padding: 5px; 
+  height: 40px; 
+}
+
+.avaliacao-celula {
+  max-width: 60px;
 }
 
 @media (max-width: 1485px) {

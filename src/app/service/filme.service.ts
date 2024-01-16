@@ -15,6 +15,7 @@ export interface Filme {
   tempoDuracao: number;
   link: string;
   videoId: string; 
+  avaliacao: number;
 }
 
 @Injectable({
@@ -188,4 +189,23 @@ export class FilmesService {
     });
     this.filmesAutorizadosSubject.next(filmesFiltrados);
   }  
+
+  salvarAvaliacao(filmeId: string | undefined, avaliacao: number): Observable<any> {
+    if (!filmeId) {
+      console.error('ID do filme não está definido.');
+      return throwError('ID do filme não está definido.');
+    }
+  
+    const url = `${this.apiUrl2}/${filmeId}/avaliacao`; 
+    return this.http.post(url, { avaliacao }).pipe(
+      catchError((error) => {
+        console.error('Erro ao salvar avaliação:', error);
+        return throwError('Erro ao salvar avaliação. Consulte o console para obter mais detalhes.');
+      }),
+      tap(() => {
+        console.log('Avaliação salva com sucesso');
+        this.fetchFilmesAutorizadosFromBackend();
+      })
+    );
+  }
 }  
