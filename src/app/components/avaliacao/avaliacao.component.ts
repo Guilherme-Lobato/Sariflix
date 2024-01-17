@@ -17,22 +17,21 @@ export class AvaliacaoComponent implements OnInit {
     private fb: FormBuilder,
     private filmesService: FilmesService
   ) {
+
     this.avaliacaoForm = this.fb.group({
-      avaliacao: [null, Validators.required],
+      avaliacao: ['AVALIAÇÃO', Validators.required], // Defina 'AVALIAÇÃO' como valor inicial
     });
   }
 
   ngOnInit(): void {
     if (this.filmeId) {
-      // Obtém a avaliação do filme do banco de dados
-      this.filmesService.obterAvaliacao(this.filmeId).subscribe(
-        (avaliacao) => {
-          // Configura o valor inicial do controle do formulário
-          this.avaliacaoForm.get('avaliacao')?.setValue(avaliacao);
-        },
-        (error) => {
-          console.error('Erro ao obter avaliação:', error);
-        }
+     this.filmesService.obterAvaliacao(this.filmeId).subscribe(
+       (avaliacao) => {
+          this.avaliacaoForm.get('avaliacao')?.setValue(avaliacao || 'AVALIAÇÃO');
+       },
+       (error) => {
+         console.error('Erro ao obter avaliação:', error);
+       }
       );
     }
   }
