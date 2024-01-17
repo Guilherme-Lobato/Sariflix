@@ -54,7 +54,8 @@
           <th class="genero">Gênero</th>
           <th class="tempo-duracao">Duração</th>
           <th class="link">Link</th>
-          <th></th>
+          <th class="nota">NOTA</th>
+          <th class="check">ASSISTIDO?</th>
           <th></th>
         </tr>
       </thead>
@@ -69,10 +70,11 @@
             <a *ngIf="filme.link" [routerLink]="['/Inicio', { videoId: filme.videoId }]" 
               (click)="abrirLink(filme.link, filme.videoId)">Assistir</a>
           </td>
-          <td class="avaliacao-celula">
-            <div class="avaliacao-caixa">
+          <td class="nota">
               <app-avaliacao [filmeId]="filme._id"></app-avaliacao>
-            </div>
+          </td>
+          <td class="check">
+            <input class="checkbox" type="checkbox" [(ngModel)]="filme.assistido" (change)="marcarComoAssistido(filme)">
           </td>
           <td class="acoes">
             <button class="excluir" (click)="excluirFilme(filme)">Excluir</button>

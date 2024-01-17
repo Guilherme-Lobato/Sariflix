@@ -107,7 +107,23 @@ th {
   margin-right: 10px;
 }
 
-.link {
+.link{
+  max-width: 50px;
+  overflow: hidden; 
+  white-space: nowrap; 
+  padding-right: 10px;
+  margin-right: 10px;
+}
+
+.nota {
+  max-width: 50px;
+  overflow: hidden; 
+  white-space: nowrap; 
+  padding-right: 10px;
+  margin-right: 10px;
+}
+
+.check{
   max-width: 50px;
   overflow: hidden; 
   white-space: nowrap; 
@@ -173,6 +189,11 @@ label{
   max-width: 60px;
 }
 
+.checkbox {
+  width: 50px;
+  height: 50px;
+}
+
 @media (max-width: 1485px) {
   .container {
     padding: 20px 10px;
@@ -218,7 +239,9 @@ label{
   .genero,
   .link,
   .nome-filme,
-  .acoes{
+  .acoes,
+  .check,
+  .nota {
     max-width: 30px;
     overflow: hidden; 
     white-space: nowrap; 

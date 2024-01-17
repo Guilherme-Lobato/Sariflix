@@ -31,13 +31,15 @@ export class ListaFilmesComponent implements OnInit {
   ngOnInit() {
     this.filmes$ = this.filmesService.filmesAutorizados$;
     this.filmesService.fetchFilmesAutorizadosFromBackend();
-    
+  
     this.filtroForm = this.formBuilder.group({
       nomeViewer: [''],
       filme: [''],
       ano: [''],
       genero: [''],
     });
+
+    this.obterEstadosAssistidos();
   }
   
   excluirFilme(filme: Filme): void {
@@ -111,4 +113,37 @@ export class ListaFilmesComponent implements OnInit {
 
     return filmesEmbaralhados;
   }
+
+  marcarComoAssistido(filme: Filme): void {
+    if (filme && filme._id) {
+      this.filmesService.marcarComoAssistido(filme._id).subscribe(
+        () => {
+          console.log('Filme marcado como assistido com sucesso');
+        },
+        (error) => {
+          console.error('Erro ao marcar como assistido:', error);
+        }
+      );
+    } else {
+      console.error('ID do filme não está definido');
+    }
+  }
+  
+  private obterEstadosAssistidos(): void {
+    this.filmes$.subscribe(filmes => {
+      filmes.forEach(filme => {
+        if (filme._id) {
+          this.filmesService.getEstadoAssistido(filme._id).subscribe(
+            response => {
+              filme.assistido = response.assistido;
+            },
+            error => {
+              console.error('Erro ao obter estado assistido:', error);
+            }
+          );
+        }
+      });
+    });
+  }
+  
 }

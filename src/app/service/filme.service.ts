@@ -16,6 +16,7 @@ export interface Filme {
   link: string;
   videoId: string; 
   avaliacao: number;
+  assistido: boolean;
 }
 
 @Injectable({
@@ -211,6 +212,25 @@ export class FilmesService {
         return throwError('Erro ao obter avaliação. Consulte o console para obter mais detalhes.');
       }),
       map(response => response.avaliacao)
+    );
+  }
+
+  getEstadoAssistido(filmeId: string): Observable<{ assistido: boolean }> {
+    const url = `${this.apiUrl2}/${filmeId}/assistido`;
+    return this.http.get<{ assistido: boolean }>(url);
+  }
+  
+  marcarComoAssistido(filmeId: string): Observable<any> {
+    const url = `${this.apiUrl2}/${filmeId}/marcar-assistido`;
+    return this.http.post(url, {}).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('Erro ao marcar como assistido:', error);
+        return throwError('Erro ao marcar como assistido. Consulte o console para obter mais detalhes.');
+      }),
+      tap(() => {
+        console.log('Marcado como assistido com sucesso');
+        this.fetchFilmesAutorizadosFromBackend();  // Atualiza a lista de filmes autorizados
+      })
     );
   }
 }  
