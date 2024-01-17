@@ -3,6 +3,8 @@ import { FilmesService, Filme } from '../../service/filme.service';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { SharedService } from '../../service/shared.service';
+import { MatDialog } from '@angular/material/dialog';
+import { SorteioModalComponent } from '../sorteio-modal/sorteio-modal.component';
 
 @Component({
   selector: 'app-lista-filmes',
@@ -12,15 +14,16 @@ import { SharedService } from '../../service/shared.service';
 export class ListaFilmesComponent implements OnInit {
   filmes$!: Observable<Filme[]>;
   filtroForm!: FormGroup;
-  avaliacaoForm!: FormGroup;
-  avaliacoes: number[] = [1, 2, 3, 4, 5];
   fb: FormBuilder;
+  avaliacoes: number[] = [1, 2, 3, 4, 5];
   filmeSelecionado: Filme | undefined;
+  avaliacaoSelecionada: number | null = null;
 
   constructor(
     private filmesService: FilmesService,
     private formBuilder: FormBuilder,
-    private sharedService: SharedService 
+    private sharedService: SharedService,
+    private dialog: MatDialog 
   ) {
     this.fb = formBuilder;
   }
@@ -35,12 +38,8 @@ export class ListaFilmesComponent implements OnInit {
       ano: [''],
       genero: [''],
     });
-
-    this.avaliacaoForm = this.formBuilder.group({
-      avaliacao: [null],
-    });
   }
-
+  
   excluirFilme(filme: Filme): void {
     if (filme._id) {
       this.filmesService.excluirFilme(filme._id).subscribe(
@@ -80,29 +79,36 @@ export class ListaFilmesComponent implements OnInit {
         window.open(link, '_blank');
     }
   }
-  
-  salvarAvaliacao(filme: Filme | undefined, avaliacao: number | null): void {
-    if (filme?._id && avaliacao !== null) {
-      this.filmesService.salvarAvaliacao(filme._id, avaliacao).subscribe(
-        () => {
-          console.log('Avaliação salva com sucesso');
-          // Atualize a lista de filmes autorizados se necessário
-          this.filmesService.fetchFilmesAutorizadosFromBackend();
-        },
-        (error) => {
-          console.error('Erro ao salvar avaliação:', error);
-        }
-      );
-    } else {
-      console.error('ID do filme ou avaliação não está definido.');
-    }
+
+  sortearFilmes(): void {
+    const filmes = this.filmesService.filmesAutorizadosSubject.value; 
+    const filmesSorteados = this.embaralharFilmes(filmes).slice(0, 5);
+
+    const dialogRef = this.dialog.open(SorteioModalComponent, {
+      data: { filmesSorteados },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('O modal foi fechado', result);
+    });
   }
 
-  onSelectAvaliacao(): void {
-    const avaliacaoControl = this.avaliacaoForm.get('avaliacao');
-    if (avaliacaoControl && this.filmeSelecionado) {
-      const avaliacao = avaliacaoControl.value;
-      this.salvarAvaliacao(this.filmeSelecionado, avaliacao);
+  private embaralharFilmes(filmes: Filme[]): Filme[] {
+    let currentIndex = filmes.length;
+    let temporaryValue;
+    let randomIndex;
+
+    const filmesEmbaralhados = filmes.slice();
+
+    while (currentIndex !== 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      temporaryValue = filmesEmbaralhados[currentIndex];
+      filmesEmbaralhados[currentIndex] = filmesEmbaralhados[randomIndex];
+      filmesEmbaralhados[randomIndex] = temporaryValue;
     }
+
+    return filmesEmbaralhados;
   }
 }

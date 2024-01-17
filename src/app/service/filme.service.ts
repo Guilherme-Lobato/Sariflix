@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { SharedService } from './shared.service';
 
 export interface Filme {
@@ -31,7 +31,7 @@ export class FilmesService {
   private filmesPendentesSubject: BehaviorSubject<Filme[]> = new BehaviorSubject<Filme[]>([]);
   filmesPendentes$: Observable<Filme[]> = this.filmesPendentesSubject.asObservable();
 
-  private filmesAutorizadosSubject: BehaviorSubject<Filme[]> = new BehaviorSubject<Filme[]>([]);
+  public filmesAutorizadosSubject: BehaviorSubject<Filme[]> = new BehaviorSubject<Filme[]>([]);
   filmesAutorizados$: Observable<Filme[]> = this.filmesAutorizadosSubject.asObservable();
 
 
@@ -188,24 +188,29 @@ export class FilmesService {
       );
     });
     this.filmesAutorizadosSubject.next(filmesFiltrados);
-  }  
+  }
 
-  salvarAvaliacao(filmeId: string | undefined, avaliacao: number): Observable<any> {
-    if (!filmeId) {
-      console.error('ID do filme não está definido.');
-      return throwError('ID do filme não está definido.');
-    }
-  
-    const url = `${this.apiUrl2}/${filmeId}/avaliacao`; 
+  salvarAvaliacao(filmeId: string, avaliacao: number): Observable<any> {
+    const url = `${this.apiUrl2}/${filmeId}/avaliacao`;
     return this.http.post(url, { avaliacao }).pipe(
-      catchError((error) => {
+      catchError((error: HttpErrorResponse) => {
         console.error('Erro ao salvar avaliação:', error);
         return throwError('Erro ao salvar avaliação. Consulte o console para obter mais detalhes.');
       }),
       tap(() => {
-        console.log('Avaliação salva com sucesso');
-        this.fetchFilmesAutorizadosFromBackend();
+        console.log('Avaliação salva no servidor com sucesso');
       })
+    );
+  }
+
+  obterAvaliacao(filmeId: string): Observable<number> {
+    const url = `${this.apiUrl2}/${filmeId}/avaliacao`;
+    return this.http.get<{ avaliacao: number }>(url).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('Erro ao obter avaliação:', error);
+        return throwError('Erro ao obter avaliação. Consulte o console para obter mais detalhes.');
+      }),
+      map(response => response.avaliacao)
     );
   }
 }  

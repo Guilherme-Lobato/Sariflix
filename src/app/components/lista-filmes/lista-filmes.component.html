@@ -41,6 +41,7 @@
           </select>
         </label>
         <button class="botao-filtro" type="button" (click)="aplicarFiltro()">Aplicar Filtro</button>
+        <button class="botao-sortear" type="button" (click)="sortearFilmes()">Sortear</button>
       </form>
     </div>
     <div class="lista">
@@ -70,14 +71,7 @@
           </td>
           <td class="avaliacao-celula">
             <div class="avaliacao-caixa">
-              <div>
-                <form [formGroup]="avaliacaoForm">
-                  <select id="avaliacao" class="avaliacao" formControlName="avaliacao">
-                    <option [ngValue]="null">AVALIAÇÃO</option>
-                    <option *ngFor="let i of avaliacoes" [ngValue]="i">{{ '⭐'.repeat(i) }}</option>
-                  </select>
-                </form>
-              </div>
+              <app-avaliacao [filmeId]="filme._id"></app-avaliacao>
             </div>
           </td>
           <td class="acoes">

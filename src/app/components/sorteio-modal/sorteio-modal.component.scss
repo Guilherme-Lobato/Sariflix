@@ -1,0 +1,27 @@
+.container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.titulo {
+    text-align: center;
+    font-size: 60px;
+    color: rgb(102, 255, 0);
+    
+}
+
+.sorteados {
+    list-style-type: none;
+    color: rgb(151, 238, 148);
+    font-size: 40px;
+}
+
+button.fechar {
+    height: 40px;
+    min-width: 100px; 
+    border-radius: 10px;
+    background-color: #d12020;
+    color: white;
+    margin-left: 10px;
+  }
+

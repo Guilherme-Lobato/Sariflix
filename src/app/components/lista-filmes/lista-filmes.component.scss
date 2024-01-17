@@ -4,10 +4,11 @@ body {
 }
 
 .container {
-  padding: 90px 25px 20px;
+  padding: 90px 25px 40px;
   width: 100%;
   max-width: none !important;
-  height: 73vh; 
+  height: 75vh;  
+  overflow: hidden;
 }
 
 .lista{
@@ -168,13 +169,6 @@ label{
   background-color: rgb(141, 26, 122);
 }
 
-.avaliacao {
-  max-width: 170px; 
-  font-size: 25px; 
-  padding: 5px; 
-  height: 40px; 
-}
-
 .avaliacao-celula {
   max-width: 60px;
 }
@@ -182,7 +176,7 @@ label{
 @media (max-width: 1485px) {
   .container {
     padding: 20px 10px;
-    height: 55vh;
+    height: 65vh;
   }
 
   .lista {
@@ -231,4 +225,23 @@ label{
     padding-right: 5px;
     margin-right: 5px;
   }
+}
+
+.botao-sortear {
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  width: 120px;
+  height: 35px;
+  padding-bottom: 10px;
+  text-align: center;
+  margin-top: 8px; 
+  line-height: 2.0; 
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  background-color: rgb(85, 29, 94);
+}
+
+.botao-sortear:hover {
+  background-color: rgb(141, 26, 122);
 }

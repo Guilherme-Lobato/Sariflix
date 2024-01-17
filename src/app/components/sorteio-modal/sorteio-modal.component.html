@@ -1,0 +1,9 @@
+<body>
+    <div class="container">
+        <h2 class="titulo">Filmes Sorteados</h2>
+        <ul>
+            <li class="sorteados" *ngFor="let filme of data.filmesSorteados">{{ filme.filme }}</li>
+        </ul>
+        <button class="fechar" [mat-dialog-close]="'Fechar'">Fechar</button>
+    </div>
+</body>
