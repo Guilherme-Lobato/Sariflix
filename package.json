@@ -1,10 +1,9 @@
 {
   "name": "sariflix",
-  "version": "0.0.0",
-  "scripts": {
+  "version": "0.0.0","scripts": {
     "ng-build": "ng build --configuration=production",
     "start-angular": "cd Server && ng serve",
-    "start-server": "node node_modules/wait-on/bin/wait-on Server/server.js && node Server/server.js && sleep 5",
+    "start-server": "node Server/server.js",
     "build": "npm run ng-build && npm run build-server",
     "build-server": "echo 'Build completed successfully'",
     "netlify-build": "npm run ng-build && npm run start-server",
