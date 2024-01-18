@@ -1,0 +1,3 @@
+[build]
+  publish = "Sariflix/dist/Sariflix"  # Caminho do frontend Angular
+  command = "cd Sariflix/server && npm install && node server.js"
