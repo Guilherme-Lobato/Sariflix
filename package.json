@@ -4,7 +4,7 @@
   "scripts": {
     "ng-build": "ng build --configuration=production",
     "start-angular": "cd Server && ng serve",
-    "start-server": "node Server/server.js",
+    "start-server": "node node_modules/wait-on/bin/wait-on Server/server.js && node Server/server.js",
     "build": "npm run ng-build && npm run build-server",
     "build-server": "echo 'Build completed successfully'",
     "netlify-build": "npm run ng-build && npm run start-server",
@@ -27,6 +27,7 @@
     "popper.js": "^1.14.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "wait-on": "^7.2.0",
     "zone.js": "~0.14.2"
   },
   "devDependencies": {
