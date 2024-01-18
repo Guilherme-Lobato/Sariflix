@@ -7,6 +7,7 @@
     "start-server": "node Server/server.js",
     "build": "npm run ng-build && npm run build-server",
     "build-server": "echo 'Build completed successfully'",
+    "netlify-build": "npm run ng-build && npm run start-server",
     "netlify-start": "concurrently \"npm run start-server\" \"npm run start-angular\" --kill-others"
   },
   "private": true,
