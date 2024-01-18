@@ -1,3 +1,0 @@
-[build]
-  publish = "dist/sariflix/browser" 
-  command = "cd Sariflix/ cd Server && npm install && node server.js"
