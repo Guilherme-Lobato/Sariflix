@@ -3,11 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "concurrently \"npm run start-server\" \"npm run start-angular\"",
+    "start-angular": "cd Server && ng serve",
+    "start-server": "node Server/server.js",
     "build": "ng build --configuration=production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "build-and-serve": "npm run build && cd Server && npm install && npm start && echo 'Build and serve completed successfully'"
+    "build-and-serve": "npm run build && echo 'Build completed successfully' && npm run start"
   },
   "private": true,
   "dependencies": {
@@ -33,6 +35,7 @@
     "@angular/cli": "^17.0.5",
     "@angular/compiler-cli": "^17.0.0",
     "@types/jasmine": "~5.1.0",
+    "concurrently": "^8.2.2",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
