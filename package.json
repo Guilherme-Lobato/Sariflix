@@ -2,14 +2,12 @@
   "name": "sariflix",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "netlify-start": "concurrently \"npm run start-server\" \"npm run start-angular\" --kill-others",
+    "ng-build": "ng build --configuration=production",
     "start-angular": "cd Server && ng serve",
     "start-server": "node Server/server.js",
-    "build": "ng build --configuration=production",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "build-and-serve": "npm run build && echo 'Build completed successfully' && npm run start"
+    "build": "npm run ng-build && npm run build-server",
+    "build-server": "echo 'Build completed successfully'",
+    "netlify-start": "concurrently \"npm run start-server\" \"npm run start-angular\" --kill-others"
   },
   "private": true,
   "dependencies": {
