@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm run start-server",
-    "start-angular": "ng serve",
-    "start-server": "concurrently \"node Server/server.js\" \"ng serve\"",
+    "start": "concurrently \"npm run start-server\" \"npm run start-angular\"",
+    "start-angular": "cd Server && ng serve",
+    "start-server": "node Server/server.js",
     "build": "ng build --configuration=production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
