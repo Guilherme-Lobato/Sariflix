@@ -1,0 +1,3 @@
+[build]
+  command = "npm run build-and-serve"
+  publish = "dist/Sariflix/browser"
