@@ -1,4 +1,7 @@
 [build]
   command = "npm run build"
-  functions = "functions" 
+  functions = "functions"  
   publish = "dist/sariflix/browser"
+
+[dev]
+  command = "npm run netlify-start"
