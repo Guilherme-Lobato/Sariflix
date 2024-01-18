@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build-and-serve": "ng build --prod && cd ../Server && npm install && node server.js"
   },
   "private": true,
   "dependencies": {
