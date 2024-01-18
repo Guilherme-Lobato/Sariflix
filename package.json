@@ -7,7 +7,7 @@
     "build": "ng build --configuration=production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "build-and-serve": "npm start && cd Server && npm install && npm start"
+    "build-and-serve": "npm run build && cd Server && npm install && npm start"
   },
   "private": true,
   "dependencies": {
