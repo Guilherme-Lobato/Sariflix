@@ -1,4 +1,3 @@
 [build]
-  command = "npm run build"
   functions = "server/"
   publish = "dist/sariflix/browser"
