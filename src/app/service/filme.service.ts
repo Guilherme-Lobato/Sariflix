@@ -142,8 +142,8 @@ export class FilmesService {
         return throwError('Erro ao autorizar filme. Consulte o console para obter mais detalhes.');
       }),
       tap(() => {
-        this.fetchFilmesAutorizadosFromBackend();  // Atualiza a lista de filmes autorizados
-        this.fetchFilmesPendentesFromBackend();  // Atualiza a lista de filmes pendentes
+        this.fetchFilmesAutorizadosFromBackend();  
+        this.fetchFilmesPendentesFromBackend();  
       })
     );
   }
@@ -158,7 +158,7 @@ export class FilmesService {
       tap(
         () => {
           console.log('Filme excluído com sucesso');
-          this.fetchFilmesPendentesFromBackend();  // Atualiza a lista de filmes pendentes
+          this.fetchFilmesPendentesFromBackend();  
         },
         (error) => {
           console.error('Erro ao excluir filme pendente:', error);
@@ -229,7 +229,7 @@ export class FilmesService {
       }),
       tap(() => {
         console.log('Marcado como assistido com sucesso');
-        this.fetchFilmesAutorizadosFromBackend();  // Atualiza a lista de filmes autorizados
+        this.fetchFilmesAutorizadosFromBackend(); 
       })
     );
   }
